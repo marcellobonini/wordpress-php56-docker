@@ -1,0 +1,9 @@
+services:
+    wordpress:
+        ports:
+            - "8080:80"
+
+    mysql:
+        # MySQL 5.7 is often pulled as amd64 on Apple Silicon, so keep the
+        # local override explicit without forcing that on Coolify.
+        platform: linux/amd64

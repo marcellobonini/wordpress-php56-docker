@@ -24,14 +24,9 @@ RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli
 # Download and extract WordPress files on /var/www/html
 RUN wp core download --allow-root
 
-# Get args from docker-composer.yml
-ARG WORDPRESS_DB_NAME
-ARG WORDPRESS_DB_USER
-ARG WORDPRESS_DB_PASSWORD
-ARG WORDPRESS_DB_HOST
+COPY apache-servername.conf /etc/apache2/conf-available/servername.conf
 
-# Creating wp-config.php file on /var/www/html
-RUN wp config create --dbname=${WORDPRESS_DB_NAME} --dbuser=${WORDPRESS_DB_USER} --dbpass=${WORDPRESS_DB_PASSWORD} --dbhost=${WORDPRESS_DB_HOST} --allow-root --skip-check
+RUN a2enconf servername
 
 COPY entrypoint.sh /entrypoint.sh
 
