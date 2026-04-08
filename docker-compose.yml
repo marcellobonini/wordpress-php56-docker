@@ -5,11 +5,10 @@ services:
         volumes:
             - wordpress-files:/var/www/html
         environment:
-            SERVICE_URL_WORDPRESS: ${SERVICE_URL_WORDPRESS:-}
-            WORDPRESS_DB_HOST: mysql
-            WORDPRESS_DB_USER: ${SERVICE_USER_WORDPRESS:-wordpress}
-            WORDPRESS_DB_PASSWORD: ${SERVICE_PASSWORD_WORDPRESS:-wordpress}
-            WORDPRESS_DB_NAME: wordpress
+            - WORDPRESS_DB_HOST=mysql
+            - WORDPRESS_DB_USER=${SERVICE_USER_WORDPRESS:-wordpress}
+            - WORDPRESS_DB_PASSWORD=${SERVICE_PASSWORD_WORDPRESS:-wordpress}
+            - WORDPRESS_DB_NAME=wordpress
         depends_on:
             mysql:
                 condition: service_healthy
@@ -29,10 +28,10 @@ services:
         volumes:
             - mysql-data:/var/lib/mysql
         environment:
-            MYSQL_ROOT_PASSWORD: ${SERVICE_PASSWORD_ROOT:-rootpass}
-            MYSQL_DATABASE: wordpress
-            MYSQL_USER: ${SERVICE_USER_WORDPRESS:-wordpress}
-            MYSQL_PASSWORD: ${SERVICE_PASSWORD_WORDPRESS:-wordpress}
+            - MYSQL_ROOT_PASSWORD=${SERVICE_PASSWORD_ROOT:-rootpass}
+            - MYSQL_DATABASE=wordpress
+            - MYSQL_USER=${SERVICE_USER_WORDPRESS:-wordpress}
+            - MYSQL_PASSWORD=${SERVICE_PASSWORD_WORDPRESS:-wordpress}
         healthcheck:
             test:
                 - CMD-SHELL
