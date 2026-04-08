@@ -1,8 +1,8 @@
-version: '3.1'
-
 services:
 
     db:
+        # MySQL 5.7 is pulled as amd64 on Apple Silicon, so make that explicit.
+        platform: linux/amd64
         # mysql/mysql-server is less in size than mysql
         image: mysql/mysql-server:5.7
         restart: always

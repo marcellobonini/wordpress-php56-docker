@@ -4,11 +4,25 @@ FROM php:5.6-apache
 # Install the mysqli extension
 RUN docker-php-ext-install mysqli
 
+<<<<<<< HEAD
 # Update repo
 RUN apt-get update -y
 
 # Install mysql-client
 RUN apt-get install mysql-client -y
+=======
+# Update package sources for the archived Debian Stretch base image and
+# install the CLI tools needed during the image build.
+RUN set -eux; \
+  printf '%s\n' \
+    'deb [trusted=yes] http://archive.debian.org/debian stretch main' \
+    'deb [trusted=yes] http://archive.debian.org/debian-security stretch/updates main' \
+    > /etc/apt/sources.list; \
+  printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99archive; \
+  apt-get update -o Acquire::Check-Valid-Until=false; \
+  apt-get install -y --no-install-recommends curl default-mysql-client; \
+  rm -rf /var/lib/apt/lists/*
+>>>>>>> 00ae996 (Fix failing build on obsolite debian packages)
 
 # Install wp-cli as wp
 RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar  && \
